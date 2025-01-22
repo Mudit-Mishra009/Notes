@@ -1,0 +1,49 @@
+Considerations for dockerization of any application -:
+
+
+
+Identify the software/tool using which we will run the application. Eg -: NodeJS application need NodeJS server. Java application needs jdk. Python application needs python as runtime. Static website needs webservers like Apache2, Nginx, Httpd, etc. This is called as “base image” in docker file.
+Identify the artifact or artifact files to deploy using the runtime identified in above step.
+Start the runtime, so that the artifact or artifact files get accessible from the runtime.
+
+
+
+In the example we take “node-items-app-service” repository.
+
+
+
+
+
+
+
+Dockerizing a NodeJS application -:
+
+We now need to write the Dockerfile in the IDE. Remember the dockerfile could be of any name. Visual studio code identifies it with “Dockerfile” name. Alternatively, we can have a file with extension as “.dockerfile”.
+Open this above project folder inside the Visual studio code.
+Steps are -:
+
+Install NodeJS in the machine.
+Inside the directory with the project files run “npm install”. This will install node-modules.
+Then run “npm start”. This will run the application on port 3000.
+Now inside the Docker file in Visual Studio Code -:
+
+Whatever we write inside the Docker file gets executed inside the image that we run as a container.
+We need to check what base image of Node does hub.docker.com offers.
+We go to hub.docker.com and search node and get the official image for node.
+We enter “FROM node:latest” in our docker file to get the node base image from docker hub.
+We enter “RUN mkdir /opt/node-js-app”. Run command executes commands inside the shell which is inside the container that is running.
+We enter “WORKDIR /opt/node-js-app”. This is a necessary step as we need to make the above created directory as a work directory in the image with our choice of name. This helps because if we want to get to the container after we run it, we can go directly to this work directory.
+We enter “COPY . $WORKDIR”. To copy all source code to the work directory inside the container.
+We enter “RUN npm install”. This will install node-modules inside our container.
+We enter “CMD [“npm”, “start”]”. This runs npm start command in the shell inside the container.
+Now we can build this docker file and run it as a container like in the last session.
+// We enter “COPY package.json $WORKDIR”. We copy this package.json to the work directory we made above as that file contains data about the node dependencies. We can do this too to copy this file individually, but we instead copy everything at once.
+
+
+
+
+
+DIFFERENCE BETWEEN “RUN” AND “CMD” commands -:
+
+RUN command is an image build command which is executed while building the image and the changes made by it are committed to the image itself. These commands layer on top of each other and are executed while building the environment inside the image that we are about to run as container.
+CMD command is used to execute commands inside the container that is already running. It is not an image build command. These are used to run commands inside the shell of the already running container.
