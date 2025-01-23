@@ -1,0 +1,42 @@
+DOCKER CONTAINERS -:
+
+Docker containers are running instances of Docker images. Docker file is a set of instructions which when built gives us the Docker images.
+Now with these docker images we can create containers to run these images.
+All running containers have their directories inside “/var/lib/docker/containers/<container id as folder name>
+
+The questions are -:
+•	Which one contains the running application? Docker Image or Docker Container?
+•	Which will hold the application and its dependencies including the runtime? Docker Images or Containers?
+•	Docker containers are running instances of Docker images, why and how?
+
+When Docker file is built it is called Docker Image. When Docker Image is run, it is called Docker Container.
+
+Docker containers hold the application and its dependencies including the runtime.
+
+When we apply docker run on docker images a process is started, starting a Docker container, the application, its dependencies, the runtime and the artifact of the application. 
+The applications running inside the Docker container are only accessible within the container. To access the application over network, we need to publish the port. Eg-:8080.
+
+Commands for Docker containers -:
+•	Docker ps -: Get the running containers using this command. We can also use “docker ps -a” to see all, running or stopped.
+•	Docker start <container id/name> -: To start a container.
+•	Docker stop<container id/name> -: To stop a container.
+•	Docker top <container id/name> -: To see the running processes of a container with their Child Process Id(PID) and Parent Process Id(PPID), which is responsible for creating the child process id. Eg-:
+o	PID 				PPID
+	2205				2182
+	2246				2205
+	2847				2246
+	Here, 2182 created 2205, 2205 created 2246, 2246 created 2847. These processes start on starting a container and killed on stopping it.
+•	docker pause <container id/name> -: Pause a container. Processes will exist but will be on-hold state. Application will not be accessible. On running “docker ps”, we see the container in the paused state. Container will not stop.
+•	docker unpause <container id/name> -: Unpause a container. It starts the processes of the container. Application is now accessible.
+•	docker stats<container id/name> -: Shows the resource utilization taking place using the container.
+•	docker container prune -: This command is use to remove the stopped containers. This also remove the container directory in “var/lib/docker”.
+•	docker exec -it <name of container> bash -: Enter the running container using interactive mode(-it) inside bash shell. This takes us inside the working directory that we created. Changes inside this are not allowed because we can corrupt the files and the container wont run which will not allow us to repair it, in which case, we delete the container and recreate it.
+•	docker run -d -name <any container name> -p 8080:3000(for node) <image name> -: Here “-d” will run the container in detached mode. This runs the container in the background without tying it to the terminal. Running the same command without “-d” starts the container in attached state.
+•	docker attach <container id> -: Attached a container to the terminal.
+•	docker rm <container id/name> -: To remove the container. We can use “docker rm -f <container id/name> to remove a container forcibly. 
+•	NOTE -: If we want to detach a running container which we have entered in interactive mode, we can press “Ctrl+P” or “Ctrl+Q” to detach the container and still not stopping it and going back to our machine shell from the container shell.
+
+REALTIME SCENARIO -:
+•	Database container like mysql, postgresql will dump the data inside the container for example postgres dp dump data into the directory “/var/lib/postgres/data” inside the docker container.
+•	Mysql dumps the data inside “var/lib/mysql” inside the docker container.
+•	Assume the docker container occupies 3GB RAM while the host machine has 4GB RAM which will cause an error, hence to check these types of issues “docker stats” is important.
