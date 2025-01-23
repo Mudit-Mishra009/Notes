@@ -37,6 +37,7 @@ We enter “COPY . $WORKDIR”. To copy all source code to the work directory in
 We enter “RUN npm install”. This will install node-modules inside our container.
 We enter “CMD [“npm”, “start”]”. This runs npm start command in the shell inside the container.
 Now we can build this docker file and run it as a container like in the last session.
+Only the port in docker run command would be 8080:3000
 // We enter “COPY package.json $WORKDIR”. We copy this package.json to the work directory we made above as that file contains data about the node dependencies. We can do this too to copy this file individually, but we instead copy everything at once.
 
 
