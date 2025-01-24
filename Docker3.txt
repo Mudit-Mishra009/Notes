@@ -1,0 +1,53 @@
+Dockerizing the Spring Boot Application – Weshopify-Monolith Application
+
+Characteristics of this app -:
+•	E-commerce application, all modules inside a single .war file.
+•	Uses mysql in dev environment and h2 in qa
+•	Running on port 5001.
+
+Steps to follow -:
+•	We first get the application to either our local machine or to an instance. In this case we use our local machine.
+•	We go inside the application folder in command prompt and run “mvn clean install -DkipTests=true”. This is done after installation of maven in your system. This will run “clean” and “install” goals of maven and also skip the test cases check.
+•	This will give us the artifact of the application inside the target directory. We can run this artifact using “java -r .\”<artifact name>”. .\ means inside the directory we are in.
+•	This will start the application on port 8080. We can access using localhost:8080.
+
+Dockerizing it -:
+•	We have to create containers for the application and the db and link these two containers.
+•	First we will have to write the docker file.
+•	We now have to get the openjdk base image from docker hub.
+•	We can go to docker hub and search for it.
+•	We enter “FROM openjdk:11”. We can take any version that we want.
+•	We enter “RUN mkdir opt/weshopify-platform”. Create a directory.
+•	WE enter “WORKDIR opt/weshopify-platform”. Make the above created directory, a work directory.
+•	COPY <artifact-name.war> $WORKDIR. Copy the artifact to the work directory. Remember to keep the Dockerfile and artifact in the same folder OR the Dockerfile must be in the parent folder of the application and artifact inside the target folder which is the subfolder of the parent folder of the application.
+•	CMD[“java”, “-jar”, “artifact-name.war”]. Run this command inside the container shell, once the container is up and running.
+•	Now, if we did all the above process in our local, we will have to copy the artifact file and the dockerfile in our docker machine. We can do the above process in our docker machine itself. It is basically just building the application and writing a docker file.
+•	Now, we run a new container on our docker machine for creating a container for mysql database using -: “docker run -d - - name <any-container-name> -p 3306:3306 -e MYSQL_ROOT_PASSWORD=<anypassword> -e MYSQL_DATABASE=<anydatabasename> mysql”.
+•	Docker will check for this mysql image in our local and not find it and will pull it from the docker hub automatically.
+•	Here, we use -e to set necessary environment variables for mysql server to start on our container. These environment variables can be checked on the docker documentation about the mysql base image.
+•	We can now check the status of our container using “docker ps”.
+•	Then we can connect to our container using the bash shell.
+•	Inside the bash shell -:
+o	We run “mysql -u root -p <databasename>. This means we login with a user called root ( -u root), with a password(-p) and for the database(database name).
+o	Enter the password we set above and this will login inside the mysql server.
+o	We run “show databases;”. It shows us all the databases.
+o	We run “use <databasename>;” to use our database.
+o	We run “show tables;” to see that there are not tables.
+o	We run “exit” twice to exit from the database and then the bash.
+•	Now we create our application container for which we have written the dockerfile and created the artifact.
+•	We run “docker build -f Dockerfile –tag <anyimagename>.
+•	This will build the docker image.
+•	Now we build our application container and link it to the database container at the same time.
+•	We run “docker run --name <anycontainername> --link <dbcontainername>:mysql -p 8080:8080 -e DB_HOST=<dbcontainername> -e DB_SCHEMA=<createddatabasename> <abovecreatedimagename>
+•	Now the application will run successfully.
+•	Now we go inside the database container and connect to the bash and login to mysql.
+•	Inside the bash -:
+o	We run “show tables;”
+o	We run “select * from user_role;”. To show everything inside the “user_role” table.
+o	It shows the schema, it show that the table takes and integer id and a varchar description and a varchar role name. Hence, we insert one admin and once customer role.
+o	We run “insert into user_role values (1, ‘admin’, ‘admin’);”
+o	We run “insert into user_role values (2, ‘customer’, ‘customer’);”
+o	We run “describe user_permissions”. To check what schema does the user_permissions table follows. It shows that it takes an integer id and a action.
+o	We run “insert into user_permissions values (1, ‘view’);”. Therefore, we insert id as 1 and that id 1 can perform view action in the database. This table “user_permissions” is automatically joined with the “user_role” table and takes the id 1 as the admin in the user_role table. Therefore, we have assigned the action view to the admin user in the database.
+o	Now if we exit the database and inside the bash go to “/var/lib/mysql” we will find everything regarding mysql, all files and everything there. Also, there will be a directory for the database we created.
+o	We go inside that database directory, there is a “customer.ibd” file which holds the names of all the customers we have inside our application.
