@@ -8,7 +8,7 @@ Characteristics of this app -:
 Steps to follow -:
 •	We first get the application to either our local machine or to an instance. In this case we use our local machine.
 •	We go inside the application folder in command prompt and run “mvn clean install -DkipTests=true”. This is done after installation of maven in your system. This will run “clean” and “install” goals of maven and also skip the test cases check.
-•	This will give us the artifact of the application inside the target directory. We can run this artifact using “java -r .\”<artifact name>”. .\ means inside the directory we are in.
+•	This will give us the artifact of the application inside the target directory. We can run this artifact using “java -jar .\”<artifact name>”. .\ means inside the directory we are in.
 •	This will start the application on port 8080. We can access using localhost:8080.
 
 Dockerizing it -:
