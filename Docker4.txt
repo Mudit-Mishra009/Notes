@@ -1,0 +1,53 @@
+DOCKER VOLUMES -:
+•	Docker volumes are stored in a part of docker host filesystem which is managed by Docker. Volumes are created and managed by Containers.
+•	When we create a volume it is stored in a directory on the docker host machine. 
+•	The whole “/var/lib/mysql” data will be copied to a “volumes” directory on the docker host machine. These volumes are safe even when the user deletes the containers.
+•	
+
+Problem -: The docker images are immutable. All files inside the containers are stored on a writable container layer. The data doesn’t persist when that container no longer exists. Therefore, it is very difficult to get the data out of the container if another process needs it.
+
+STEPS –:
+•	We now login to our docker machine and delete the db container we created earlier for weshopify.
+•	We create a new db container without linking it to the application container and go inside the bash
+•	Inside the bash -:
+o	We run “ls -l” and we see all the files and directories .
+o	We go inside “var/lib/mysql” to find all the data pertaining to db inside this folder. Even the database we created is inside this.
+o	Now imagine if this container is deleted, all the data will be gone forever. Therefore, we also sync the data to the docker host machine as a backup. 
+o	Therefore, the new container that is created will get the data from our docker host machine in the form of a Docker Volume.
+
+STEPS -:
+•	Now as root user we run “docker volume ls” to see a list of docker volumes on the docker host machine.
+•	We can run “docker volume inspect <volume name>. This will show the information about the mentioned volume and its location of the host machine which is “var/lib/docker/volumes/”
+•	But we are unable to see what containers this volume is connected to. Also, even after checking their stored locations we cannot determine this.
+•	Therefore, when we create a volume we give it a name. We create a named volume.
+•	We create a volume by running “docker volume create <anyvolumename>”.
+•	We cannot attach a volume to the container while it is stopped or running. We can only attach the volume to the container while it is being created.
+•	So, here we can do that by running “docker container run -d - -name <anycontainername> -e MYSQL_ALLOW_EMPTY_PASSWORD=true -v <abovecreatedvolumename>:/var/lib/mysql  mysql”
+•	Here, -e is for environment variables of MySQL where we have allowed password to be empty. -v is for volume and we give the volume name we want to attach with its path and finally the image name that will start the container “mysql”.
+•	This will start the container using the latest mysql image and attach the volume we created to the container with all the data that we had. This will allow all the data coming to the directory to be stored inside the volume backup.
+•	Now if we inspect the volume we created, and go to the mountpoint location of this image, we will find that all the container data is exported here.
+•	We can remove a volume by running “docker volume rm <volume name>”. A volume can only be deleted on deleting its container first as trying to remove it even using -f will result in an showing it is still in use.
+
+VOLUME WITH MOUNT -:
+•	We create volume with mounts which is explicitly providing the source and the target while running the container with mysql image.
+•	Create a named volume.
+•	We run “docker container run -d - -name <anycontainername> -e MYSQL_ALLOW_EMPTY_PASSWORD=true - -mount source=<abovecreatedvolumename>, target=/var/lib/mysql mysql”.
+•	Here we present the source of storage, which is our volume and the target to get the data for storage from.
+•	Now again if we go inside the mountpoint of our volume, we can find all the container data inside.
+•	Now these volumes are mutable, we can create some data inside these volumes. The change will also be reflected inside the container the volume is attached to.
+
+
+Docker volumes that are not named on creation, are named with their sha256 ID. But these volumes we cannot check what containers they are mapped to, hence we create named volumes.
+
+When a volume is created, we can attach it to a container using either “-v” method or the “- -mount” method.
+
+If we want to mount the container data into a different file system of the docker host machine then we have to use the bind mounts concept.
+
+MOUNT BIND -:
+•	We run the command “docker container run -d - -name <anycontainername> -e MYSQL_ALLOW_EMPTY_PASSWORD=true - -mount type=bind,source=<anydirectory>, target=/var/lib/mysql mysql” to bind the mount to the container.
+•	Here in any directory, we can create a directory for example in /opt called “medilab” and give it chmod 777 permissions.Now the data from the container will be mounted and binded to this directory and all the container data can be found inside this directory.
+
+Warm Regards,
+Mudit Mishra
+TSnR/TRIP T3 Support
+
