@@ -1,0 +1,32 @@
+ADVANTAGES OF BIND MOUNTS -:
+•	Bind mounts may be stored anywhere on the host system. 
+•	Non-Docker processes on the Docker machine or the Docker container can modify them at any time.
+•	We can share the configuration from host machine to the containers.
+•	We can share source code or build artifacts between a dev environment on the Docker host and container.
+  
+Bind Mounts cannot be used in a Dockerfile.
+
+VERTICAL CONTAINERS -:
+•	We create two containers with the mysql image and connect them with the same volume.
+•	But first we need to create a directory inside /opt with chmod 777 permissions with bind mounts.
+•	We run “docker run -d  --name <anycontainername> -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=<anydbname> --mount type=bind, source=/opt/<abovecreateddirectoryname>, target=var/lib/mysql mysql”
+•	No we link this db container to our application container, the monolith application container which we wrote the dockerfile for.
+•	Now we insert a new entry inside user_permissions for the admin user.
+•	This will create the backup of mysql inside the directory we made above.
+•	Now if we remove this container and create a new one.
+•	Again we run, “docker run -d  --name <anynewcontainername> -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=<anydbname> --mount type=bind, source=/opt/<abovecreateddirectoryname>, target=var/lib/mysql mysql”
+•	Link this container to our application by providing the same source directory which had the backup of the mysql for the previous container.
+•	The application will still launch with all the database data even though the previous container was removed.
+
+Docker Compose -:
+•	Link command that we use to link two containers, cannot link more than two containers. Also, the link command is too long to link the db to the app and it not readable. Also, it takes a lot of time to use such a lengthy command to connect containers.
+•	If we want to link more than two containers, the link command wont work for us. 
+•	To solve these problems we use Docker-Compose.
+•	Docker Compose is a container orchestration tool used for orchestrating one or more containers.
+•	Here, orchestration means the central brain which controls the container management like network creation, volume creation, removing containers, removing network, removing volume. All this will be taken care by the Docker Compose tool.
+•	We go inside our docker machine and update the box and install Docker Compose on our Ubuntu machine using “apt install docker-compose”.
+
+Warm Regards,
+Mudit Mishra
+TSnR/TRIP T3 Support
+
