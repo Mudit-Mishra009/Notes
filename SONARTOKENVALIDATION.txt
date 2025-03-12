@@ -1,0 +1,19 @@
+https://
+your_sonar_token_goes_here
+:@sonar.it.att.com/api/authentication/validate 
+
+
+
+
+sqp_6de885f973d01161a674aee630fe5ea36b18c752 - new sonar token. Project Analysis Token.
+Project analysis tokens - sqp prefix
+USer token - squ prefix
+
+Need to generate when expired. Can be created with userid. mechid not needed
+
+
+In case JFROG token expire, check in global credentials which mechId is used for Maven, generate a new PAT token by loggin into JFROG with the specific maven mechId credentials. Paste that token in global credentials of mechid and maven-settings.xml file in the config files option in jenkins in the specific project.
+
+sonar.token can be used as sonar.login and sonar.password are no longer supported.
+
+Update this token the sonar.properties file in the sonar.token or sonar.password parameter. Run the build.
