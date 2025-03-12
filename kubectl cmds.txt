@@ -1,0 +1,1138 @@
+when you install a new jump server . 
+Steps to connect to the aks cluster :
+
+install kubectl -- https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/  ( use Debian steps for kubectl installation )
+after installation verify using kubectl version
+
+install helm --  https://helm.sh/docs/intro/install/  
+make sure you have you helm-charts folder in your home directory
+after installation verify using helm list
+
+List the resources
+
+kubectl get ns
+kubectl get deployment
+kubectl get pods
+kubectl get svc
+kubectl get rs
+kubectl get hpa
+kubectl get nodes
+kuebctl get secrets
+kubectl get ingress
+
+Describe the resources 
+
+kubectl describe deployment <depname>
+kubectl describe pod <podname>
+kubectl describe svc <svcname>
+kubectl describe rs <rsname>
+kubectl describe hpa <hpaname>
+kubectl describe node <nodename>
+kubectl describe ingress <ingressname>
+kubectl describe secret <secretname>
+
+Edit the resources 
+
+kubectl edit deployment <depname>
+kubectl edit pod <podname>
+kubectl edit svc <svcname>
+kubectl edit rs <rsname>
+kubectl edit hpa <hpaname>
+kubectl edit ingress <ingressname
+
+Get logs from pods
+
+kubectl logs <podname> <containername> >> filename.txt
+
+Get /access resources from all namespace :
+
+eg : kubectl get deployment -A
+
+Get / access resources from other namespace :
+
+eg : kubectl get deployment -n <namespacename>
+
+Enter into the pod :
+
+kubectl exec -it <podname> -- bash
+
+To get all info like version namespace of any resource :
+
+eg : kubectl get deployment -o wide
+
+Delete any resource except deployment :
+
+kubectl delete pod <podname>
+
+Delete the deployment
+
+ helm uninstall <deploymentname>
+
+Helm Commands :
+
+helm list
+helm search repo       
+helm search repo <depname>
+helm show
+helm show all
+helm repo update
+helm status <depname>
+helm search hub
+helm upgrade --install akv-secret-inject-0-0-local-deployment akv-secret-inject -f akv-secret-inject/env_configs/defaults.yaml -f akv-secret-inject/env_configs/nprd/defaults.yaml --namespace extensions -- Use this when u want to upgrade or when the particular deployment is missing 
+
+
+
+Get cluster info :  kubectl cluster-info
+Get version :  kubectl version
+
+Command to take packet dumps :
+
+tcpdump -ni eth0 -w /tmp/tsnr-20220427-capture01.pcap
+
+Change into other namespace :
+
+kubectl config set-context --current --namespace=default
+
+how  to uninstall and reinstall nginx controller :
+
+helm get values nginx-ingress-controller > values.yaml
+helm uninstall nginx-ingress-controller
+kubectl annotate $KIND $NAME meta.helm.sh/release-name=$RELEASE
+kubectl annotate $KIND $NAME meta.helm.sh/release-namespace=$NAMESPACE
+kubectl label $KIND $NAME app.kubernetes.io/managed-by=Helm
+helm install nginx-ingress-controller ingress-nginx/ingress-nginx -f ./values.yaml
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+some commands that took from history :
+
+   24  kubectl cp ng-portal-0-0-d2a-c7977594c-lgwj2:/usr/local/apache2/ng-portal-0-0-d2a-7874b96696-ddhvk-ethcap-2021-04-30-TIME-13-10.pcap0 ngportal_packet_trace_3004_v2.pcap
+   25  kubectl cp ng-portal-0-0-d2a-7874b96696-ddhvk:/usr/local/apache2/ng-portal-0-0-d2a-7874b96696-ddhvk-ethcap-2021-04-30-TIME-13-10.pcap0 ngportal_packet_trace_3004_v2.pcap
+   26  cp ngportal_packet_trace_3004_v2.pcap /mnt/myshare/
+   27  kubectl get deployment -o wide
+   28  kubectl edit deployment ng-portal-0-0-d2a
+   29  kubectl get pods
+   30  kubectl exec -it ng-portal-0-0-d2a-9bb7cc5fb-nwt8d -- bash
+   31  kubectl get deployment -o wide
+   32  kubectl edit deployment ng-portal-0-0-d2a
+   33  kubectl get ods
+   34  kubectl get pods
+   35  kubectl exec -it ng-portal-0-0-d2a-994d9bfb7-6dfv9 -- bash
+   36  kubectl edit deployment ng-portal-0-0-d2a
+   37  kubectl get pods
+   38  kubectl exec -it ng-portal-0-0-d2a-5486fd98cd-6h2s9 -- bash
+   39  kubectl edit deployment ng-portal-0-0-d2a
+   40  kubectl get pods
+   41  kubectl exec -it ng-portal-0-0-d2a-756c75f9b9-qrxzk -- bash
+   42  kubectl get deployment -o wide
+   43  kubectl get pods
+   44  kubectl logs workflowms-6dd76b5797-spk7x workflowms
+   45  kubectl get deployment -o wide
+   46  kubectl edit deployment ng-portal-0-0-d2a
+   47  kubectl get deployment -o wide
+   48  kubectl get pods
+   49  kubectl exec -it ng-portal-0-0-d2a-64d9f74bdd-9ckk9 -- bash
+   50  kubectl get deployment -o wide
+   51  kubectl edit deployment ng-portal-0-0-d2a
+   52  kubectl get pods
+   53  kubectl exec -it ng-portal-0-0-d2a-8bccbb499-n44j6 -- bash
+   54  kubectl edit deployment ng-portal-0-0-d2a
+   55  kubectl get pods
+   56  kubectl exec -it ng-portal-0-0-d2a-74b4bb54b-hv558 -- bash
+   57  kubectl get ingress
+   58  kubectl describe ingress ingress-ngportal
+   59  kubectl exec -it ng-portal-0-0-d2a-74b4bb54b-hv558 -- bash
+   60  kubectl get pods
+   61  kubectl cp nsenter-xfwsfo:/tmp/aks-aksdefpool-40461820-vmss000001-ethcap-2021-04-29-TIME-16-17.pcap0 ngportal_packet_capture.pcap
+   62  ls -lart
+   63  cp ngportal_packet_capture.pcap /mn/myshare
+   64  cp ngportal_packet_capture.pcap /mnt/myshare
+   65  kubectl get pods
+   66  kubectl exec -it ng-portal-0-0-d2a-74b4bb54b-hv558 -- bash
+   67  kubectl cp ng-portal-0-0-d2a-74b4bb54b-hv558:/usr/local/apache2/ng-portal-0-0-d2a-74b4bb54b-hv558-ethcap-2021-04-29-TIME-17-30.pcap0 ngportal_packet_capture_v2.pcap
+   68  ls -lart
+   69  cp ngportal_packet_capture_v2.pcap /mnt/myshare/
+   70  kubectl exec -it ng-portal-0-0-d2a-74b4bb54b-hv558 -- bash
+   71  kubectl cp ng-portal-0-0-d2a-74b4bb54b-hv558:/usr/local/apache2/ng-portal-0-0-d2a-74b4bb54b-hv558-ethcap-2021-04-29-TIME-17-38.pcap0 ngportal_packet_capture_v3.pcap
+   72  cp ngportal_packet_capture_v3.pcap /mnt/myshare/
+   73  kubectl get pods -o wide
+   74  kubectl exec -it ng-portal-0-0-d2a-74b4bb54b-hv558 -- bash
+   75  kubectl cp ng-portal-0-0-d2a-74b4bb54b-hv558:/usr/local/apache2/ng-portal-0-0-d2a-74b4bb54b-hv558-ethcap-2021-04-29-TIME-17-54.pcap0 ngportal_packet_capture_v4.pcap
+   76  cp ngportal_packet_capture_v4.pcap /mnt/myshare/
+   77  kubectl exec -it ng-portal-0-0-d2a-74b4bb54b-hv558 -- bash
+   78  kubectl cp ng-portal-0-0-d2a-74b4bb54b-hv558:/usr/local/apache2/ng-portal-0-0-d2a-74b4bb54b-hv558-ethcap-2021-04-29-TIME-18-36.pcap0 ngportal_packet_capture_v5.pcap
+   79  cp ngportal_packet_capture_v5.pcap /mnt/myshare/
+   80  kubectl get deployment
+   81  kubectl edit deployment ng-portal-0-0-d2a
+   82  kubectl get pod
+   83  kubectl exec -it ng-portal-0-0-d2a-cb8f648b9-vhjwx -- bash
+   84  kubectl cp ng-portal-0-0-d2a-cb8f648b9-vhjwx:/usr/local/apache2/ng-portal-0-0-d2a-cb8f648b9-vhjwx-ethcap-2021-04-29-TIME-18-43.pcap0 ngportal_packet_capture_v6.pcap
+   85  cp ngportal_packet_capture_v6.pcap /mnt/myshare/
+   86  kubectl get pod -o wide
+   87  kubectl exec -it ng-portal-0-0-d2a-cb8f648b9-vhjwx -- bash
+   88  kubectl edit deployment ng-portal-0-0-d2a
+   89  kubectl get pod -o wide
+   90  kubectl exec -it ng-portal-0-0-d2a-74b4bb54b-8mplg -- bash
+   91  kubectl cp ng-portal-0-0-d2a-74b4bb54b-8mplg:/usr/local/apache2/ng-portal-0-0-d2a-74b4bb54b-8mplg-ethcap-2021-04-29-TIME-19-11.pcap0 ngportal_packet_capture_v7.pcap
+   92  cp ngportal_packet_capture_v7.pcap /mnt/myshare/
+   93  kubectl exec -it ng-portal-0-0-d2a-74b4bb54b-8mplg -- bash
+   94  kubectl cp ng-portal-0-0-d2a-74b4bb54b-8mplg:/usr/local/apache2/ng-portal-0-0-d2a-74b4bb54b-8mplg-ethcap-2021-04-29-TIME-19-14.pcap0 ngportal_packet_capture_v8.pcap
+   95  cp ngportal_packet_capture_v8.pcap /mnt/myshare/
+   96  kubectl cp ng-portal-0-0-d2a-74b4bb54b-8mplg:/usr/local/apache2/ng-portal-0-0-d2a-74b4bb54b-8mplg-ethcap-2021-04-29-TIME-19-15.pcap0 ngportal_packet_capture_v9.pcap
+   97  ls lart
+   98  ls -lart
+   99  cp ngportal_packet_capture_v9.pcap /mnt/myshare/
+  100  kubectl get pod -o wide
+  101  kubectl exec -it ng-portal-0-0-d2a-74b4bb54b-8mplg -- bash
+  102  kubectl cp ng-portal-0-0-d2a-74b4bb54b-8mplg:/usr/local/apache2/ng-portal-0-0-d2a-74b4bb54b-8mplg-ethcap-2021-04-29-TIME-19-27.pcap0 ngportal_packet_capture_v10.pcap
+  103  cp ngportal_packet_capture_v10.pcap /mnt/myshare/
+  104  kubectl get deployment -o wide
+  105  kubectl edit deployment ng-portal-0-0-d2a
+  106  kubectl get deployment -o wide
+  107  kubectl get pod -o wide
+  108  kubectl edit deployment ng-portal-0-0-d2a
+  109  kubectl get pod -o wide
+  110  kubectl delete pod ng-portal-0-0-d2a-648949c8b6-gc24p
+  111  kubectl get pod -o wide
+  112  kubectl exec -it ng-portal-0-0-d2a-648949c8b6-hdgwg -- bash
+  113  kubectl cp ng-portal-0-0-d2a-648949c8b6-hdgwg:/usr/local/apache2/ng-portal-0-0-d2a-648949c8b6-hdgwg-ethcap-2021-04-29-TIME-20-39.pcap0 ngportal_packet_capture_v11.pcap
+  114  cp ngportal_packet_capture_v11.pcap /mnt/myshare/
+  115  kubectl exec -it ng-portal-0-0-d2a-648949c8b6-hdgwg -- bash
+  116  kubectl cp ng-portal-0-0-d2a-648949c8b6-hdgwg:/usr/local/apache2/ng-portal-0-0-d2a-648949c8b6-hdgwg-ethcap-2021-04-29-TIME-20-46.pcap0 ngportal_packet_capture_v12.pcap
+  117  cp ngportal_packet_capture_v12.pcap /mnt/myshare/
+  118  kubectl edit deployment ng-portal-0-0-d2a
+  119  kubectl get deployment -o wide
+  120  kubectl exec -it ng-portal-0-0-d2a -- bash
+  121  kubectl get pod -o wide
+  122  kubectl exec -it ng-portal-0-0-d2a-859794cd77-s8vxh -- bash
+  123  kubectl cp ng-portal-0-0-d2a-859794cd77-s8vxh:/usr/local/apache2/ng-portal-0-0-d2a-859794cd77-s8vxh-ethcap-2021-04-30-TIME-15-37.pcap0 ngportal_packet_capture_v13.pcap
+  124  cp ngportal_packet_capture_v13.pcap /mnt/myshare/
+  125  kubectl exec -it ng-portal-0-0-d2a-859794cd77-s8vxh -- bash
+  126  curl -x http://proxy.conexus.svc.local:3128 google.com
+  127  kubectl get pods
+  128  kubectl exec -it ng-portal-0-0-d2a-7c89db4f76-jv8nz -- bash
+  129  nslookup proxy.conexus.svc.local
+  130  helm list
+  131  helm uninstall authenticationms-0-0-live-deployment
+  132  helm list
+  133  helm uninstall hazelcast-0-0-live-deployment
+  134  clear
+  135  helm list
+  136  kubectl get cm
+  137  kubectl edit cm authenticationms-1-1-d2a-configs
+  138  kubectl get pods
+  139  kubectl delete pod authenticationms-7957dbfb49-24fdt
+  140  kubectl get pods
+  141  helm uninstall hazelcast-0-0-local-deployment
+  142  kubectl get pods
+  143  kubectl exec -it ng-portal-0-0-d2a-6cc78466bc-nqdck -- bash
+  144  curl -kv  https://tsnrgui-test1.test.att.com
+  145   kubectl exec -it ng-portal-0-0-d2a-6cc78466bc-nqdck -- bash
+  146  kubectl get pods
+  147  kubectl exec -it ng-portal-0-0-d2a-9bb7cc5fb-nwt8d -- bash
+  148  kubectl get pods
+  149  kubectl exec -it ng-portal-0-0-d2a-74b4bb54b-8mplg -- bash
+  150  clear
+  151  history
+  152  curl -kv  https://tsnrgui-test1.test.att.com
+  153  kubectl get pods
+  154  kubectl exec -it ng-portal-0-0-d2a-c7977594c-lgwj2 -- bash
+  155  kubectl get pods
+  156  kubectl exec -it ng-portal-0-0-d2a-c7977594c-lgwj2 -- bash
+  157  kubectl get pods
+  158  kubectl exec -it ng-portal-0-0-d2a-859794cd77-s8vxh -- bash
+  159  kubectl get deployment
+  160  kubectl edit deployment ng-portal-0-0-d2a
+  161  kubectl get pods
+  162  kubectl exec -it ng-portal-0-0-d2a-6cd587f654-rml2r -- bash
+  163  curl -kv --proxy1.0 http://10.2.9.13:3128 https://mirrors.it.att.com
+  164  kubectl exec -it ng-portal-0-0-d2a-6cd587f654-rml2r -- bash
+  165  kubectl exec -it ng-portal-0-0-d2a-6cd587f654-rml2r -- 'apachectl --version'
+  166  kubectl exec -it ng-portal-0-0-d2a-6cd587f654-rml2r -- 'apachectl -version'
+  167  kubectl exec -it ng-portal-0-0-d2a-6cd587f654-rml2r -- apachectl --version
+  168  kubectl exec -it ng-portal-0-0-d2a-6cd587f654-rml2r -- bash
+  169  ls -lrt
+  170  kubectl get pods
+  171  kubectl get ng-portal-0-0-d2a-6cd587f654-rml2r
+  172  kubectl get pod ng-portal-0-0-d2a-6cd587f654-rml2r
+  173  kubectl exec -it ng-portal-0-0-d2a-6cd587f654-rml2r --bash
+  174  kubectl exec -it ng-portal-0-0-d2a-6cd587f654-rml2r -- bash
+  175  kubectl get pods
+  176  kubectl get pod ng-portal-0-0-d2a-6cd587f654-rml2r
+  177  kubectl exec -it ng-portal-0-0-d2a-6cd587f654-rml2r -- bash
+  178  kubectl run ubuntu-test -it --image ubuntu -- bash
+  179  kubectl get pods
+  180  kubectl exec -it ng-portal-0-0-d2a-6cd587f654-xkxt2
+  181  kubectl exec -it ng-portal-0-0-d2a-6cd587f654-xkxt2 -- bash
+  182  kubectl get pods
+  183  kubectl get logs ng-portal-0-0-d2a-6cd587f654-xkxt2
+  184  kubectl logs ng-portal-0-0-d2a-6cd587f654-xkxt2
+  185  kubectl exec -it ng-portal-0-0-d2a-6cd587f654-xkxt2 linkerd-proxy -- bash
+  186  kubectl get deployments
+  187  kubectl edit deployment ng-portal-0-0-d2a
+  188  kubectl edit ns com-att-tsnr2
+  189  kubectl get pods
+  190  kubectl delete pod ng-portal-0-0-d2a-6cd587f654-xkxt2
+  191  kubectl get pods
+  192  kubectl exec -it ng-portal-0-0-d2a-6cd587f654-qwvhw -- bash
+  193  kubectl get pods
+  194  kubectl delete pod ng-portal-0-0-d2a-6cd587f654-qwvhw
+  195  kubectl get pods
+  196  kubectl get pods
+  197  kubectl exec -it ng-portal-0-0-d2a-6cd587f654-xkxt2 -- bash
+  198  curl -kv --proxy1.0 http://10.2.9.13:3129 https://mirrors.it.att.com
+  199  kubectl node-shell aks-aksdefpool-40461820-vmss000001
+  200  kubectl get node
+  201  kubectl node-shell aks-aksdefpool-40461820-vmss000002
+  202  kubectl exec -it ng-portal-0-0-d2a-6cd587f654-xkxt2 -- bash
+  203  kubectl get pods
+  204  kubectl logs ng-portal-0-0-d2a-6cd587f654-xkxt2
+  205  kubectl logs ng-portal-0-0-d2a-6cd587f654-xkxt2 linkerd-proxy
+  206  kubectl exec -it ng-portal-0-0-d2a-6cd587f654-xkxt2 -- bash
+  207  kubectl cp ng-portal-0-0-d2a-6cd587f654-xkxt2:/usr/local/apache2/ng-portal-0-0-d2a-6cd587f654-xkxt2-ethcap-2021-05-05-TIME-16-33.pcap0 ng-portal_packet_http10.pcap
+  208  ls -lart
+  209  cp ng-portal_packet_http10.pcap /mnt/myshare/
+  210  kubectl get pods -o wide
+  211  curl -sL run.linkerd.io/install | sh
+  212  linkerd version
+  213  export PATH=$PATH:/home/tsnradmin/.linkerd2/bin
+  214  linkerd version
+  215  linkerd check
+  216  linkerd tap --help
+  217  linkerd tap -n com.att.tsnr2 ng-portal-0-0-d2a-6cd587f654-xkxt2
+  218  linkerd viz check
+  219  curl -L https://github.com/linkerd/linkerd2/releases/download/stable-2.9.5/linkerd2-cli-stable-2.9.5-linux-amd64 -o linkerd-2.9
+  220  ls -lart
+  221  chmod 711 linkerd-2.9
+  222  ls -lart
+  223  ./linkerd-2.9
+  224  linkerd-2.9 tap -n com.att.tsnr2 ng-portal-0-0-d2a-6cd587f654-xkxt2
+  225  ./linkerd-2.9 tap -n com.att.tsnr2 ng-portal-0-0-d2a-6cd587f654-xkxt2
+  226  ./linkerd-2.9 tap -n com.att.tsnr2 pod/ng-portal-0-0-d2a-6cd587f654-xkxt2
+  227  kubectl describe ng-portal-0-0-d2a-6cd587f654-xkxt2
+  228  kubectl describe pod ng-portal-0-0-d2a-6cd587f654-xkxt2
+  229  ./linkerd-2.9 tap -n com-att-tsnr2 pod/ng-portal-0-0-d2a-6cd587f654-xkxt2
+  230  kubectl get deployments
+  231  kubectl get pods
+  232  kubectl edit ns com-att-tsnr2
+  233  kubectl get pods
+  234  kubectl exec -it ng-portal-0-0-d2a-666469764c-54d6r -- bash
+  235  clear
+  236  kubectl get pods
+  237  kubectl describe pod ng-portal-0-0-d2a-7974566555-9858m
+  238  kubectl get pods
+  239  kubectl exec -it ng-portal-0-0-d2a-7974566555-9858m -- bash
+  240  kubectl get deployment
+  241  kubectl get pod
+  242  kubectl delete pod ubuntu-test
+  243  kubectl get pod
+  244  kubectl get deployment
+  245  kubectl get pod
+  246  kubectl get deployment
+  247  kubectl autoscale deployment ng-portal-0-0-d2a --min=3 --max=6
+  248  kubectl get deployment
+  249  kubectl get pod
+  250  kubectl edit deployment ng-portal-0-0-d2a
+  251  kubectl get pod
+  252  cd /mnt/myshare
+  253  ls -lart
+  254  kubectl get deployment
+  255  kubectl edit deployment ng-portal-0-0-d2a
+  256  kubectl get all
+  257  kubectl edit hpa horizontalpodautoscaler.autoscaling/ng-portal-0-0-d2a
+  258  kubectl edit hpa ng-portal-0-0-d2a
+  259  kubectl describe hpa ng-portal-0-0-d2a -o yaml
+  260  kubectl get hpa ng-portal-0-0-d2a -o yaml
+  261  kubectl edit hpa ng-portal-0-0-d2a
+  262  kubectl get hpa
+  263  kubectl delete hpa ng-portal-0-0-d2a
+  264  kubectl get hpa
+  265  kubectl edit hpa ng-portal-0-0-d2a
+  266  kubectl get hpa
+  267  kubectl edit hpa authenticationms
+  268  kubectl get hpa
+  269  kubectl edit hpa workflowms
+  270  kubectl get hpa
+  271  kubectl edit hpa hazelcast
+  272  kubectl get hpa
+  273  kubectl edit hpa geoservicems
+  274  kubectl get hpa
+  275  kubectl get pods
+  276  kubectl describe hpa authenticationms
+  277  kubectl describe pod authenticationms-fddb4f48c-scsls
+  278  kubectl get pod
+  279  kubectl top pod authenticationms-fddb4f48c-scsls
+  280  kubectl get hpa
+  281  kubectl edit hpa authenticationms
+  282  kubectl get all
+  283  kubectl get all -n default
+  284  kubectl get deployment -o wide
+  285  kubectl edit deployment ng-portal-0-0-d2a
+  286  kubectl get deployment -o wide
+  287  kubectl get pod -o wide
+  288  kubectl get cm
+  289  kubeectl describe cm authenticationms-1-1-d2a-configs
+  290  kubectl describe cm authenticationms-1-1-d2a-configs
+  291  kubectl edit cm authenticationms-1-1-d2a-configs
+  292  kubectl get pod -o wide
+  293  kubectl delete pod authenticationms-fddb4f48c-scsls
+  294  kubectl exec -it ng-portal-0-0-d2a-5dbf67b675-t2v8x -- bash
+  295  kubectl get pod -o wide
+  296  kubectl exec -it ng-portal-0-0-d2a-5dbf67b675-t2v8x -- bash
+  297  history|grep kubectl|grep cp
+  298  ssh 10.2.11.10
+  299  ls -lart
+  300  rm workflowms.txt CONNECT Proxy-Connection: GET User-Agent: Host: Accept: tcpdump_ngportal.pcap ngportal_packet_capture.pcap ngportal_packet_capture_v2.pcap ngportal_packet_capture_v3.pcap ngportal_packet_capture_v4.pcap ngportal_packet_capture_v5.pcap ngportal_packet_capture_v6.pcap ngportal_packet_capture_v7.pcap ngportal_packet_capture_v8.pcap ngportal_packet_capture_v9.pcap ngportal_packet_capture_v10.pcap ngportal_packet_capture_v11.pcap ngportal_packet_capture_v12.pcap ngportal_packet_trace_3004_v1.pcap ngportal_packet_trace_3004_v2.pcap ngportal_packet_capture_v13.pcap ng-portal_packet_http10.pcap
+  301  ls -lart
+  302  ssh -i appvm01.pem 10.2.11.10
+  303  ssh -i appvm02.pem 10.2.11.10
+  304  ssh -i appvm03.pem 10.2.11.10
+  305  cd /mnt/myshare/
+  306  ls -lart
+  307  cp HeadlessWFService_05_03_2021.war /tmp
+  308  cd
+  309  ssh -i appvm03.pem 10.2.11.10
+  310  scp -i app01.pem /tmp/HeadlessWFService_05_03_2021.war tsnradmin@10.2.11.8:/tmp
+  311  scp -i appvm01.pem /tmp/HeadlessWFService_05_03_2021.war tsnradmin@10.2.11.8:/tmp
+  312  ssh -i appvm01.pem 10.2.11.8
+  313  kubectl get pods -o wide
+  314  kubectl get deployment -o wide
+  315  kubectl edit deployment ng-portal-0-0-d2a
+  316  kubectl get deployment -o wide
+  317  kubectl get pods -o wide
+  318  kubectl exec -it ng-portal-0-0-d2a-7c676db5bb-zftv5 -- bash
+  319  ssh -i appvm01.pem 10.2.11.8
+  320  scp -i appvm01.pem /mnt/myshare/headlesscfg.zip tsnradmin@10.2.11.8:/tmp
+  321  ssh -i appvm01.pem 10.2.11.8
+  322  kubectl top pod
+  323  kubectl api-resources --verbs=list,get
+  324  kubectl get quota
+  325  kubectl get limits
+  326  kubectl top pod -l containers
+  327  kubectl top pod -l container
+  328  kubectl top pod workflowms-8544c467df-mnx9d --container
+  329  kubectl top pod workflowms-8544c467df-mnx9d --containers
+  330  kubectl get hpa
+  331  kubectl edit hpa workflowms
+  332  kubectl get pods -o wide
+  333  kubectl get deployment -o wide
+  334  kubectl get deployments
+  335  kubectl get pod
+  336  kubectl get replica
+  337  kubectl get rs
+  338  kubectl get deployment
+  339  kubectl edit deployment ng-portal-0-0-d2a
+  340  kubectl get pod
+  341  kubectl get rs
+  342  kubectl get pods
+  343  kubectl get cm
+  344  kubect; edit cm authenticationms-1-1-d2a-configs
+  345  kubectl edit cm authenticationms-1-1-d2a-configs
+  346  kubectl get pods
+  347  kubectl delete pod authenticationms-fddb4f48c-nmvp6
+  348  kubectl get pods
+  349  kubectl delete pod geoservicems-669d7c6877-2d2nj
+  350  kubectl get pods
+  351  kubectl get cm
+  352  kubectl edit cm authenticationms-1-1-d2a-configs
+  353  kubectl get pods
+  354  kubectl logs authenticationms-fddb4f48c-kgxsm > authms.txt
+  355  kubectl logs authenticationms-fddb4f48c-kgxsm authenticationms > authms.txt
+  356  vi authms.txt
+  357  kubectl get pods
+  358  kubectl get pod
+  359  kubectl get deployments
+  360  kubectl edit deployment ng-portal-0-0-d2a
+  361  kubectl get deployments
+  362  kubectl get pod
+  363  kubectl get deployments -o wide
+  364  kubectl edit deployment ng-portal-0-0-d2a
+  365  kubectl get deployments -o wide
+  366  kubectl get pods
+  367  kubectl edit deployment ng-portal-0-0-d2a
+  368  kubectl get deployments -o wide
+  369  kubectl get pods
+  370  kubectl get deployment -o wide
+  371  kubectl edit ng-portal-0-0-d2a
+  372  kubectl edit deployment ng-portal-0-0-d2a
+  373  kubectl get pods
+  374  kubectl get deployment -o wide
+  375  kubectl get pods
+  376  kubectl delete pod hazelcast-6b456c7bc7-2r682
+  377  kubectl get pods
+  378  kubectl edit deployment ng-portal-0-0-d2a
+  379  kubectl get deployment -o wide
+  380  kubectl get pods
+  381  kubectl edit deployment ng-portal-0-0-d2a
+  382  kubectl get cm
+  383  kubectl edit cm ng-portal-0-0-d2a-configs
+  384  kubectl get deployments
+  385  kubectl edit deployment ng-portal-0-0-d2a
+  386  kubectl get deployment
+  387  kubectl edit deployment ng-portal-0-0-d2a
+  388  kubectl get pods
+  389  kubectl get deployment -o wide
+  390  kubectl get hpa
+  391  kubectl edit hpa ng-portal-0-0-d2a
+  392  kubectl get deployment
+  393  kubectl get deployment -o wide
+  394  kubectl edit deployment ng-portal-0-0-d2a
+  395  ls -lrt
+  396  history
+  397  vi etc/mail/sendmail.cf
+  398  cd /etc/mail/
+  399  ls
+  400  ls -lrt
+  401  sudo su
+  402  history | grep ssh
+  403  ssh -i appvm01.pem 10.2.11.8
+  404  ssh -i appvm01.pem 10.2.11.10
+  405  ls -lrt
+  406  cd
+  407  ssh -i appvm01.pem 10.2.11.10
+  408  ssh -i appvm01.pem 10.2.11.8
+  409  history | grep ssh
+  410   ssh -i appvm02.pem 10.2.11.10
+  411   ssh -i appvm02.pem 10.2.11.8
+  412   ssh -i appvm02.pem 10.2.11.9
+  413   ssh -i appvm02.pem 10.2.11.10
+  414   ssh -i appvm03.pem 10.2.11.10
+  415  sudo yum update
+  416  exit
+  417  kubectl get namespaces
+  418  kubectl get pods -o wide
+  419  kubectl logs ng-portal-0-0-d2a-78bdfd4774-2hfjv
+  420  $ kubectl get pods geoservicems-669d7c6877-7cnh6 -n com-att-tsnr2 -o jsonpath='{.spec.containers[*].name}*'
+  421  kubectl get pods --all-namespaces -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.name}{", "}{end}{end}' |sort
+  422  kubectl get pods -n com-att-tsnr2 -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.name}{", "}{end}{end}' |sort
+  423  $ kubectl get pods geoservicems-669d7c6877-7cnh6 -n com-att-tsnr2 -o jsonpath='{geoservicems}*'
+  424  kubectl get pods geoservicems-669d7c6877-7cnh6 -n com-att-tsnr2 -o jsonpath='{geoservicems}*'
+  425  clear
+  426  kubectl get secrets
+  427  kubectl get akvs
+  428  kubectl get ingress
+  429  kubectl get deployment -o wide
+  430  kubectl edit deployment ng-portal-0-0-d2a
+  431  kubectl get deployment -o wide
+  432  kubectl get pod
+  433  kubectl get deployments
+  434  kubectl get deployments -o wide
+  435  kubectl get pods -o wide
+  436  kubectl get ns
+  437  kubectl create ns com-att-tsnr2-dev
+  438  kubectl get ns
+  439  kubectl get pods --com-att-tsnr2-dev
+  440  ls -lart
+  441  cd .kube
+  442  kubectl config current-context
+  443  ls -lart
+  444  vi config
+  445  cd ..
+  446  kubectl config use-context tsnr-dev
+  447  kubectl get pods
+  448  cd -
+  449  vi config
+  450  cd -
+  451  kubectl config use-context tsnr-eastus2-nprd-app-aks-01-admin
+  452  kubectl get deployments
+  453  kubectl get pods
+  454  kubectl get cm
+  455  kubectl get hpa
+  456  kubectl edit hpa ng-portal-0-0-d2a
+  457  kubectl get all
+  458  kubectl get ingress
+  459  kubectl get deployment -o wide
+  460  kubectl edit deployment ng-portal-0-0-d2a
+  461  kubectl get pod
+  462  kubectl get pods
+  463  kubectl get ns
+  464  kubectl create ns com-att-tsnr2-test
+  465  kubectl get ns
+  466  kubectl get all
+  467  kubectl get cm
+  468  kubectl edit cm authenticationms-1-1-d2a-configs
+  469  kubectl get deployment
+  470  kubectl get deployment -o wide
+  471  kubectl edit deployment ng-portal-0-0-d2a
+  472  kubectl get deployment -o wide
+  473  kubectl get pods
+  474  kubectl get deployment -o wide
+  475  kubectl get pods
+  476  kubectl get hpa
+  477  kubectl edit hpa ng-portal-0-0-d2a
+  478  kubectl get deployment -o wide
+  479  kubectl get ns
+
+  481  kubectl get deployments
+  482  cd.kube
+  483  vi .kube/config
+  484  kubectl config use-context tsnr-eastus2-nprd-app-aks-01-admin
+  485  kubectl get ingress
+  486  kubectl edit ingress ingress-ngportal
+  487  kubectl edit ingress ingress-ngportal-https
+  488  kubectl get pods
+  489  kubectl exec -it ng-portal-0-0-d2a-6d7bd95fdb-n9r49 -- bash
+  490  kubectl get nodes
+  491  kubectl node-shell aks-aksdefpool-40461820-vmss00000f
+  492  kubecctl node-shell aks-aksdefpool-40461820-vmss00000l
+  493  kubectl node-shell aks-aksdefpool-40461820-vmss00000l
+  494  kubectl get pods
+  495  kubectl exec -it ng-portal-0-0-d2a-6d7bd95fdb-n9r49 -- bash
+  496  kubectl exec -it workflowms-8544c467df-w45m7 -- bash
+  497  kubectl exec -it geoservicems-669d7c6877-h78lb -- bash
+  498  kubectl get nm
+  499  kubectl
+  500  kubectl --namespace com-att-tsnr2-dev get services -o wide
+  501  kubectl --namespace com-att-tsnr2 get services -o wide
+  502  kubectl all
+  503  kubectl get ns
+  504  kubectl get all
+kubectl config current-context
+  480  kubectl config use-context tsnr-dev
+  505  helm search repo table
+  506  helm search repo
+  507  helm search akv-secret-inject
+  508  helm serach hub
+  509  helm search hub
+  510  helm serach hub akv-secret-inject
+  511  helm status akv-secret-inject
+  512  helm status akvs-secret-inject-0-0-local-deployment
+  513  kubectl get all
+  514  helm version
+  515  helm repo update
+  516  kubectl get ns
+  517  kubectl --namespace com-att-tsnr2-dev get services -o wide
+  518  helm list
+  519  helm search repo         akv-secret-inject-0.1.0 1.16.0
+  520  helm search repo akv-secret-inject-0.1.0
+  521  helm search repo akv-secret-
+  522  helm show
+  523  helm show -n com-att-tsnr2-dev
+  524  helm show all
+  525  helm show all akv-secret-inject-0.1.0 -n com-att-tsnr2-dev
+  526  helm repo update
+  527  helm list
+  528  history
+  529  kubectl --namespace com-att-tsnr2-dev get services -o wide
+  530  kubectl --namespace com-att-tsnr2 get services -o wide
+  531  cat /etc/os-release
+  532  kubectl cluster-info
+  533  kubectl version
+  534  kubectl get nodes
+  535  kubectl get - list
+  536  kubectl get all
+  537  kubectl get - list service/ng-portal-0-0-d2a
+  538  kubectl get - service/ng-portal-0-0-d2a
+  539  kubectl get -list
+  540  kubectl get -list ?
+  541  kubectl get ?
+  542  kubectl get help
+  543  kubectl get
+  544  kubectl get -h
+  545  kubectl get -l
+  546  kubectl get -v
+  547  kubectl get -l service/ng-portal-0-0-d2a
+  548  kubectl get -l pod/ng-portal-0-0-d2a-6d7bd95fdb-n9r49
+  549  kubectl get -l ng-portal-0-0-d2a-6d7bd95fdb-n9r49
+  550  history
+  551  kubectl get pods
+  552  ssh -i appvm01.pem 10.2.11.10
+  553  kubectl get nodes
+  554  kubectl describe node aks-aksdefpool-40461820-vmss000002
+  555  cat /etc/os-release
+  556  sudo -
+  557  sudo -su
+  558  sudo su -
+  559  cd
+  560  ls -lrt
+  561  ssh 10.3.3.134
+  562  history
+  563  kubectl get node
+  564  kubectl node-shell aks-aksdefpool-40461820-vmss00000f
+  565  kubectl get node
+  566  kubectl get pod
+  567  kubectl exec ng-portal-0-0-d2a-6d7bd95fdb-n9r49
+  568  kubectl exec ng-portal-0-0-d2a-6d7bd95fdb-n9r49 cat /etc/os-release
+  569  kubectl exec authenticationms-fddb4f48c-6qg2c  cat /etc/os-release
+  570  kubectl get -l service/ng-portal-0-0-d2a
+  571  kubectl --namespace com-att-tsnr2 get services -o wide
+572  kubectl get deployment
+  573  kubectl edit deployment akvs-secret-inject
+  574  kubectl config current-context
+  575  kubectl config use-context tsnr-dev
+  576  ls -lart
+  577  cd helm-charts-nprd
+  578  ls -lart
+  579  cd hazelcast/
+  580  ls -lart
+  581  history|grep helm
+  582  helm search akv-secret-inject
+  583  helm serach hub akv-secret-inject
+  584  helm status akv-secret-inject
+  585  kubectl config use-context tsnr-eastus2-nprd-app-aks-01-admin
+  586  helm status akv-secret-inject
+  587  kubectl config use-context tsnr-dev
+  588  kubectl get pods
+  589  kubectl get deployment
+  590  kubectl config use-context tsnr-dev
+  591  kubectl get deployment
+  592  kubectl config use-context tsnr-eastus2-nprd-app-aks-01-admin
+  593  kubectl get deployment
+  594  kubectl get pods
+  595  helm list
+  596  kubectl get deployment
+  597  helm list
+  598  kubectl get nm
+  599  kubectl get ns
+  600  kubectl namespace com-att-tsnr2-dev get services -o wide
+  601  kubectl edit namespace com-att-tsnr2-dev
+  602  kubectl --namespace com-att-tsnr2-dev get services -o wide
+  603  kubectl --namespace com-att-tsnr2 get services -o wide
+  604  helm list
+  605  kubectl get all
+  606  kubectl get pods
+  607  kubectl config use-context tsnr-dev
+  608  kubectl config use-context tsnr
+  609  kubectl config use-context tsnr2
+  610  kubectl --namespace=com-att-tsnr2
+  611  kubectl config use-context com-att-tsnr2
+  612  clear
+  613  kubectl config use-context tsnr-eastus2-nprd-app-aks-01-admin
+  614  kubectl get all
+  615  helm list
+  616  kubectl get pods
+  617  helm status
+  618  helm status akv-secret-inject
+  619  helm list
+  620  helm status akv-secret-inject-0-0-local-deployment
+  621  kubectl config use-context tsnr-eastus2-nprd-app-aks-01-admin
+  622  kubectl get deployment
+  623  history|grep helm
+  624  history|grep "helm install"
+  625  history|grep "helm upgrade"
+  626  kubectl config use-context tsnr-dev
+  627  helm list
+  628  kubectl get ns
+  629  kubectl get deployment -n com-att-tsnr2-dev
+  630  helm hello
+  631  ls -lart
+  632  cd helm-charts-nprd
+  633  ls -lart
+  634  cd helmcharts
+  635  ls -lart
+  636  cd ..
+  637  ls -lart
+  638  kubectl get ns
+  639  kubectl get deployments
+  640  helm list
+  641  kubectl kubectl --namespace com-att-tsnr2-dev get services -o wide
+  642  kubectl --namespace com-att-tsnr2-dev get services -o wide
+  643  helm list
+  644  kubectl get all
+  645  kubectl get pods
+  646  kubectl get deployments
+  647  kubectl get pods
+  648  kubectl get all
+  649  kubectl config use-context tsnr-dev
+  650  kubectl get all
+  651  kubectl get deployments
+  652  kubectl get pods
+  653  ls -lart
+  654  vi .kube/config
+  655  kubectl config use-context tsnr-eastus2-nprd-app-aks-01-admin
+  656  kubectl get pods
+  657  kubectl get cm
+  658  kubectl edit cm authenticationms-1-1-d2a-configs
+  659  kubectl edit cm workflowms-1-1-d2a-configs
+  660  kubectl get pods
+  661  kubectl delete pod workflowms-8544c467df-w45m7
+  662  kubectl get pods
+  663  kubectl logs workflowms-8544c467df-7t6xc workflowms
+  664  curl -kv https://scanr-jbosstest8.test.att.com
+  665  kubectl get pods
+  666  kubectl exec -it workflowms-8544c467df-7t6xc
+  667  kubectl exec -it workflowms-8544c467df-7t6xc -- bash
+  668  kubectl edit cm workflowms-1-1-d2a-configs
+  669  kubectl get pods
+  670  kubectl delete pod workflowms-8544c467df-7t6xc
+  671  kubectl get pods
+  672  kubectl logs workflowms-8544c467df-htmpz workflowms > workflowms.txt
+  673  vi workflowms.txt
+  674  kubectl config use-context tsnr-dev
+  675  kubectl get ns
+  676  kubectl get deployment
+  677  kubectl get pod
+  678  helm list
+  679  kubectl edit ns com-att-tsnr2-dev
+  680  helm list
+  681  kubectl config use-context tsnr-dev
+  682  kubectl get deployment
+  683  helm list
+  684  kubectl get pod
+  685  kubectl get cm
+  686  helm upgrade --install akv-secret-inject-0-0-local-deployment akv-secret-inject -f akv-secret-inject/env_configs/defaults.yaml -f akv-secret-inject/env_configs/nprd/defaults.yaml --namespace com-att-tsnr2-dev
+  687  helm repo list
+  688  kubectl get pod
+  689  kubectl get deployment
+  690  helm repo list
+  691  helm list
+  692  vi .kube/config
+  693  kubectl config use-context tsnr-eastus2-nprd-app-aks-01-admin
+  694  helm list
+  695  helm env
+  696  kubectl config use-context tsnr-dev
+  697  helm env
+  698  vi /home/tsnradmin/.config/helm/registry.json
+  699  ls -lart
+  700  kubectl get ns
+  701  kubectl edit ns com-att-tsnr2
+  702  kubectl get rba
+  703  kubectl get rbac
+  704  kubectl get clusterroles
+  705  kubectl get clusterroles cluster-admin -o yaml
+  706  kubectl get clusterroles admin -o yaml
+  707  helm search
+  708  helm search hub
+  709  helm search repo
+  710  kubectl config use-context tsnr-eastus2-nprd-app-aks-01-admin
+  711  helm search repo
+  712  helm list
+  713  kubectl config use-context tsnr-dev
+  714  helm list
+  715  helm status akv-secret-inject-0-0-local-deployment
+  716  helm get values
+  717  helm get values akv-secret-inject-0-0-local-deployment
+  718  helm install akv-secret-inject-0-0-local-deployment
+  719  helm install akv-secret-inject-0-0-local-deployment akv-secret-inject
+  720  helm list
+  721  kubectl config use-context tsnr-eastus2-nprd-app-aks-01-admin
+  722  helm list
+  723  helm status ng-portal-0-0-local-deployment
+  724  kubectl config use-context tsnr-dev
+  725  helm list
+  726  helm install akv-secret-inject-0-0-local-deployment akv-secret-inject-0.1.0
+  727  helm show akv-secret-inject-0-0-local-deployment
+  728  helm show chart akv-secret-inject-0-0-local-deployment
+  729  helm list
+  730  helm show chart akv-secret-inject-0.1.0
+  731  helm show all
+  732  helm show all chart
+  733  helm repo update
+  734  helm history akv-secret-inject-0-0-local-deployment
+  735  helm list --all
+  736  history|grep namespace
+  737  history|grep ns
+  738  helm package
+  739  kubectl config current-context
+  740  kubectl get deployment
+  741  kubectl get pod
+  742  helm list
+  743  helm history akv-secret-inject-0-0-local-deployment
+  744  kubectl get ns
+  745  kubectl namespace com-att-tsnr2-dev get services
+  746  kubectl --namespace com-att-tsnr2-dev get services
+  747  kubectl get pods
+  748  vi .kube/config
+  749  kubectl config use-context tsnr-eastus2-nprd-app-aks-01-admin
+  750  kubectl get pods
+  751  kubectl exec -it ng-portal-0-0-d2a-6d7bd95fdb-n9r49 -- bash
+  752  kubectl get services
+  753  kubectl get cm
+  754  kubectl edit cm authenticationms-1-1-d2a-configs
+  755  kubectl api-resources --namespaced=true
+  756  kubectl config use-context tsnr-dev
+  757  kubectl api-resources --namespaced=true
+  758  kubectl get ns
+  759  kubectl describe ns com-att-tsnr2
+  760  kubectl describe ns com-att-tsnr2-dev
+  761  ls -lart
+  762  cd helm-charts-nprd/akv-secret-inject/templates/
+  763  ls -lart
+  764  vi akv-secret-inject.yaml
+  765  kubectl config current-context
+  766  kubectl apply akv-secret-inject.yaml
+  767  kubectl apply -f akv-secret-inject.yaml
+  768  kubectl get pods
+  769  helm install
+  770  helm list
+  771  helm install akv-secret-inject-0-0-local-deployment
+  772  helm install akv-secret-inject-0.1.0
+  773  helm install --set name=akvs-secret-inject akv-secret-inject-0-0-local-deployment
+  774  helm install akv-secret-inject-0-0-local-deployment akvs-secret-inject
+  775  helm install akv-secret-inject-0-0-local-deployment akv-secret-inject-0.1.0
+  776  helm install akv-secret-inject-0-0-local-deployment ./akv-secret-inject-0.1.0
+  777  helm install --repo https://charts.spvapi.no akv-secret-inject-0-0-local-deployment akv-secret-inject-0.1.0
+  778  helm install --repo https://charts.spvapi.no akv-secret-inject-0-0-local-deployment
+  779  helm show all akv-secret-inject-0-0-local-deployment
+  780  helm show all akv-secret-inject-0.1.0
+  781  helm show akv-secret-inject-0-0-local-deployment
+  782  ls -lart
+  783  kubectl get pods
+  784  kubectl get deployment -o wide
+  785  kubectl get all
+  786  kubectl get deployment -o wide
+  787  kubectl edit deployment ng-portal-0-0-d2a
+  788  kubectl get hpa
+  789  kubectl edit hpa ng-portal-0-0-d2a
+  790  kubectl get pods
+  791  kubectl config use-context tsnr-dev
+  792  kubectl get all
+  793  kubectl get pods'
+  794  '
+  795  kubectl get pods
+  796  kubectl get deployment
+  797  kubectl get deployment -o wide
+  798  kubectl get hpa
+  799  kubect; edit hpa hazelcast
+  800  kubectl edit hpa hazelcast
+  801  kubectl get deployment -o wide
+  802  helm list
+  803  kubectl get all
+  804  kubectl get ingress
+  805  kubectl config view
+  806  kubectl config use-context tsnr-eastus2-nprd-app-aks-01-admin
+  807  kubectl get ingress
+  808  helm list
+  809  kubectl config use-context tsnr-dev
+  810  helm list
+  811  kubectl get deployment
+  812  kubectl delete deployment hazelcast
+  813  kubectl get deployment
+  814  kubectl get pod
+  815  kubectl get cm
+  816  kubectl delete cm hz-config
+  817  kubectl get service
+  818  kubectl delete service hazelcast
+  819  kubectl get service
+  820  helm list
+  821  kubectl get all
+  822  kubectl get hpa
+  823  kubectl delete hpa hazelcast
+  824  helm list
+  825  kubectl get all
+  826  kubectl edit hpa hazelcast
+  827  kubectl get all
+  828  helm list
+  829  kubectl get all
+  830  kubectl edit hpa authenticationms
+  831  helm list
+  832  kubectl get deployment -o wide
+  833  kubectl get ingress
+  834  cd /mnt/share
+  835  history |grep mnt
+  836  cd /mnt/myshare
+  837  ls -lart
+  838  cd -
+  839  cp /mnt/myshare/ufixdev.test.att.com.pem .
+  840  ls -lart
+  841  openssl x509 -outform pem -in ufixdev.test.att.com.pem -out ufixdev.cer
+  842  ls -lart
+  843  openssl rsa -in ufixdev.test.att.com.pem -out ufixdev.key
+  844  ls -lart
+  845  kubectl create secret ufixdev-secret --from-file=cert=ufixdev.cer --from-file=key=ufixdev.key
+  846  kubectl create secret generic ufixdev-secret --from-file=cert=ufixdev.cer --from-file=key=ufixdev.key
+  847  kubectl get secret
+  848  kubectl get ingress
+  849  kubectl describe ingress ingress-ngportal
+  850  kubectl get hpa
+  851  kubectl edit hpa geoservicems
+  852  kubectl edit hpa ng-portal-0-0-d2a
+  853  kubectl edit hpa workflowms
+  854  kubectl get hpa
+  855  kubectl get pods -o wide
+  856  kubectl describe ingress ingress-ngportal
+  857  kubectl config view
+  858  kubectl config use-context tsnr-eastus2-nprd-app-aks-01-admin
+  859  kubectl get pods -o wide
+  860  kubectl get ingress
+  861  kubectl get ingress
+  862  kubectl config use-context
+  863  kubectl config use-context tsnr-dev
+  864  kubectl get ingress
+  865  kubectl get pods -o wide
+  866  kubectl get hpa
+  867  kubectl edit hpa ng-portal-0-0-d2a
+  868  kubectl get pods
+  869  kubectl logs authenticationms-55b968bccc-tjqxn authenticationms
+  870  kubectl get pods
+  871  kubectl describe pod authenticationms-55b968bccc-tjqxn
+  872  kubectl get pods -o wide
+  873  kubectl logs authenticationms-55b968bccc-tjqxn authenticationms > authenticationms.txt
+  874  vi authenticationms.txt
+  875  kubectl config view
+  876  kubectl config use-context tsnr-eastus2-nprd-app-aks-01-admin
+  877  kubectl get all
+  878  kubectl get deployment
+  879  helm list
+  880  kubectl get deployment -o wide
+  881  kubectl get hpa
+  882  kubectl edit hpa hazelcast
+  883  kubectl get hpa
+  884  kubectl get ns
+  885  kubectl edit ns com-att-tsnr2
+  886  kubectl edit ns com-att-tsnr2-dev
+  887  kubectl edit ns com-att-tsnr2
+  888  kubectl edit ns com-att-tsnr2-dev
+  889  kubectl get ns
+  890  kubectl config use-context tsnr-dev
+  891  kubectl get deployment
+  892  helm list
+  893  kubectl get pods
+  894  kubectl delete pod authenticationms-55b968bccc-tjqxn geoservicems-5d86f6cb8c-vd5zs ng-portal-0-0-d2a-69d9cbcdf7-74dkg workflowms-55f4b95dd5-8twn9
+  895  kubectl get pods
+  896  kubectl get hpa
+  897  kubectl edit hpa hazelcast
+  898  kubectl get hpa
+  899  kubectl get pods
+  900  kubectl get ns
+  901  helm list
+  902  kubectl get pods
+  903  kubectl get deployment
+  904  kubectl edit deployment authenticationms
+  905  kubectl config view
+  906  kubectl config use-context tsnr-eastus2-nprd-app-aks-01-admin
+  907  kubectl get deployment
+  908  kubectl config use-context tsnr-dev
+  909  kubectl get deployment
+  910  kubectl get pod
+  911  kubectl dcribe pod authenticationms-55b968bccc-nxjw4
+  912  kubectl describe pod authenticationms-55b968bccc-nxjw4
+  913  kubectl get pod
+  914  kubectl logs authenticationms-55b968bccc-nxjw4 authenticationms > authenticationms.txt
+  915  vi authenticationms.txt
+  916  kubectl get pod
+  917  kubectl get deployment
+  918  helm list
+  919  kubectl get ns
+  920  kubectl edit ns com-att-tsnr2-dev
+  921  kubectl edit ns com-att-tsnr2
+  922  kubectl edit ns com-att-tsnr2-dev
+  923  kubectl get deployment
+  924  kubectl get pod
+  925  kubectl get deployment
+  926  kubectl edit deployment authenticationms
+  927  kubectl config use-context tsnr-eastus2-nprd-app-aks-01-admin
+  928  kubectl get deployment
+  929  kubectl edit deployment authenticationms
+  930  kubectl get pods
+  931  kubectl config use-context tsnr-dev
+  932  kubectl get pods
+  933  kubectl get ingress
+  934  kubectl get secret
+  935  kubectl config view
+  936  kubectl config use-context tsnr-eastus2-nprd-app-aks-01-admin
+  937  kubectl get deployment
+  938  ls -lart
+  939  cd helm-charts-nprd/akv-secret-inject/templates/
+  940  ls -lart
+  941  vi akv-secret-inject.yaml
+  942  kubectl get deployment
+  943  kubectl get pod
+  944  kubectl get service
+  945  kubectl get cm
+  946  kubectl edit deployment akvs-secret-inject
+  947  locate akv-secret-inject
+  948  find akv-secret-inject
+  949  kubectl config view
+  950  kubectl config use-context tsnr-eastus2-nprd-app-aks-01-admin
+  951  kubectl get services
+  952  kubectl describe service ng-portal-0-0-d2a
+  953  kubectl get ingress
+  954  kubectl describe ingress ingress-ngportal
+  955  kubectl get deployments
+  956  kubectl config use-context tsnr
+  957  history
+  958  kubectl config current-context
+  959  kubectl config use-context tsnr-eastus2-nprd-app-aks-01-admin
+  960  kubectl get deployment
+  961  kubectl edit deployment ng-portal-0-0-d2a
+  962  kubectl get deployment
+  963  kubectl get pods
+  964  kubectl get deployment
+  965  kubectl edit deployment ng-portal-0-0-d2a
+  966  kubectl get pods
+  967  kubectl edit deployment ng-portal-0-0-d2a
+  968  kubectl get deployment
+  969  kubectl describe deployment ng-portal-0-0-d2a
+  970  kubectl get hpa
+  971  kubectl edit hpa ng-portal-0-0-d2a
+  972  kubectl get nodes
+  973  kubectl get nodes -o wide
+  974  kubectl get deployment -o wide
+  975  kubectl get service -o wide
+  976  kubectl get ingress -o wide
+  977  kubectl describe ingress ingress-ngportal
+  978  kubectl config use-context tsnr-dev
+  979  kubectl get node
+  980  kubectl get node -o wide
+  981  kubectl get pod -o wide
+  982  ls -lart
+  983  cd helm-charts-nprd/
+  984  ls -lart
+  985  vi test.yaml
+  986  kubectl apply -f test.yaml
+  987  kubectl get deployment
+  988  kubectl get deployment -o wide
+  989  kubectl get pod -o wide
+  990  kubectl delete pod authenticationms-55b968bccc-nxjw4 workflowms-55f4b95dd5-877d8
+  991  kubectl get pod -o wide
+  992  vi test.yaml
+  993  kubectl get pod -o wide
+  994  kubectl get deployment -o wide
+  995  kubectl delete deployment akvs-secret-inject
+  996  kubectl get deployment -o wide
+  997  kubectl get pod -o wide
+  998  kubectl get deployments
+  999  kubectl edit deployment ng-portal-0-0-d2a
+ 1000  bash --version
+ 1001  env x='() { :;}; echo "Your bash version is vulnerable"' bash -c "echo This is a test"
+ 1002  kubectl get ingress
+ 1003  kubectl config use-context tsnr-eastus2-nprd-app-aks-01
+ 1004  kubectl config use-context tsnr-eastus2-nprd-app-aks-01-admin
+ 1005  env x='() { :;}; echo "Your bash version is vulnerable"' bash -c "echo This is a test"
+ 1006  kubectl get ingress
+ 1007  kubectl describe ingress ingress-ngportal
+ 1008  kubectl get deployments
+ 1009  kubectl edit deployment authenticationms
+ 1010  env x='() { :;}; echo vulnerable' bash -c "echo this is a test"
+ 1011  yum update bash
+ 1012  clear
+ 1013  kubectl get ns
+cd /data/jumpusers/utils
+./GetAksCredentials.sh  -- it will validate user through browser
+kubectl config get-contexts -- get list of contexts
+kubectl config use-context westus2-dl-da
+kubectl get ns
+kubectl config set-context --current --namespace=com-att-wfe-da-prod
+kubectl get pods
+kubectl logs -f g2-adapter-prod-845d94cf8f-fqt9k g2-adapter
+ kubectl get configmaps xdm-adapter-live-configs -o yaml
